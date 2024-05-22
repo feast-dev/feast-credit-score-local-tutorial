@@ -2,7 +2,6 @@
 
 ## Overview
 
-![credit-score-architecture@2x](https://user-images.githubusercontent.com/6728866/132927464-5c9e9e05-538c-48c5-bc16-94a6d9d7e57b.jpg)
 
 This tutorial demonstrates the use of Feast as part of a real-time credit scoring application.
 * The primary training dataset is a loan table. This table contains historic loan data with accompanying features. The dataset also contains a target variable, namely whether a user has defaulted on their loan.
@@ -11,73 +10,10 @@ This tutorial demonstrates the use of Feast as part of a real-time credit scorin
 
 ## Requirements
 
-* Terraform (v1.0 or later)
-* AWS CLI (v2.2 or later)
+* Python 3.11
+
 
 ## Setup
-
-### Setting up Redshift and S3
-
-First we will set up your data infrastructure to simulate a production environment. We will deploy Redshift, an S3 
-bucket containing our zipcode and credit history parquet files, IAM roles and policies for Redshift to access S3, and create a 
-Redshift table that can query the parquet files. 
-
-Initialize Terraform
-```
-cd infra
-terraform init
-```
-
-Make sure the Terraform plan looks good
-```
-terraform plan -var="admin_password=thisISyourPassword1"
-```
-
-Deploy your infrastructure
-```
-terraform apply -var="admin_password=thisISyourPassword1"
-```
-
-Once your infrastructure is deployed, you should see the following outputs from Terraform
-```
-redshift_cluster_identifier = "my-feast-project-redshift-cluster"
-redshift_spectrum_arn = "arn:aws:iam::<Account>:role/s3_spectrum_role"
-credit_history_table = "credit_history"
-zipcode_features_table = "zipcode_features"
-```
-
-Next we create a mapping from the Redshift cluster to the external catalog
-```
-aws redshift-data execute-statement \
-    --region us-west-2 \
-    --cluster-identifier [SET YOUR redshift_cluster_identifier HERE] \
-    --db-user admin \
-    --database dev --sql "create external schema spectrum from data catalog database 'dev' iam_role \
-    '[SET YOUR redshift_spectrum_arn here]' create external database if not exists;"
-```
-
-To see whether the command was successful, please run the following command (substitute your statement id)
-```
-aws redshift-data describe-statement --id [SET YOUR STATEMENT ID HERE]
-``` 
-
-You should now be able to query actual zipcode features by executing the following statement
-```
-aws redshift-data execute-statement \
-    --region us-west-2 \
-    --cluster-identifier [SET YOUR redshift_cluster_identifier HERE] \
-    --db-user admin \
-    --database dev --sql "SELECT * from spectrum.zipcode_features LIMIT 1;"
-```
-which should print out results by running
-```
-aws redshift-data get-statement-result --id [SET YOUR STATEMENT ID HERE]
-```
-
-Return to the root of the credit scoring repository
-```
-cd ..
-```
 
 ### Setting up Feast
 
