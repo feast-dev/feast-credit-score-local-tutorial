@@ -1,7 +1,10 @@
-# Real-time Credit Scoring with Feast on AWS
+# Real-time Credit Scoring with Feast on Local Setup
 
 ## Overview
 
+Registry: Postgresql
+Offline Storage: duckdb
+Online Storage: Redis
 
 This tutorial demonstrates the use of Feast as part of a real-time credit scoring application.
 * The primary training dataset is a loan table. This table contains historic loan data with accompanying features. The dataset also contains a target variable, namely whether a user has defaulted on their loan.
