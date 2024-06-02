@@ -17,6 +17,13 @@ This tutorial demonstrates the use of Feast as part of a real-time credit scorin
 
 
 ## Setup
+ 
+Setup Postgresql and Redis by docker:  
+
+```
+docker run -d --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
+docker run -p 6379:6379 -d --name redis  bitnami/redis:latest
+```
 
 ### Setting up Feast
 
