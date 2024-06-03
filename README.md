@@ -49,10 +49,6 @@ cd feature_repo/
 feast apply
 ```
 ```
-Registered entity dob_ssn
-Registered entity zipcode
-Registered feature view credit_history
-Registered feature view zipcode_features
 Deploying infrastructure for credit_history
 Deploying infrastructure for zipcode_features
 ```

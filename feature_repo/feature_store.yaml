@@ -1,7 +1,7 @@
 project: credit_scoring_local
 registry: 
     registry_type: sql
-    path: postgresql://postgres@172.17.0.2:5432/feast
+    path: postgresql://postgres@localhost:5432/feast
     cache_ttl_seconds: 60
     sqlalchemy_config_kwargs:
         echo: false
@@ -9,7 +9,7 @@ registry:
 provider: local
 online_store:
     type: redis
-    connection_string: "172.17.0.3:6379"
+    connection_string: "localhost:6379"
 offline_store:
     type: duckdb
 entity_key_serialization_version: 2
