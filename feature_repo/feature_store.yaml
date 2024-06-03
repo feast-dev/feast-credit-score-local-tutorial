@@ -1,14 +1,15 @@
-project: credit_scoring_aws
-registry: registry.db
-provider: aws
+project: credit_scoring_local
+registry: 
+    registry_type: sql
+    path: postgresql://postgres@localhost:5432/feast
+    cache_ttl_seconds: 60
+    sqlalchemy_config_kwargs:
+        echo: false
+        pool_pre_ping: true
+provider: local
 online_store:
-    type: dynamodb
-    region: us-west-2
+    type: redis
+    connection_string: "localhost:6379"
 offline_store:
-    type: redshift
-    cluster_id: [SET YOUR CLUSTER ID]
-    region: us-west-2
-    user: admin
-    database: dev
-    s3_staging_location: [SET YOUR BUCKET]
-    iam_role: [SET YOUR ARN]
+    type: duckdb
+entity_key_serialization_version: 2

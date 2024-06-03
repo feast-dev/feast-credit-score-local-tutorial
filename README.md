@@ -2,9 +2,9 @@
 
 ## Overview
 
-Registry: Postgresql
-Offline Storage: duckdb
-Online Storage: Redis
+Registry: Postgresql  
+Offline Storage: duckdb  
+Online Storage: Redis  
 
 This tutorial demonstrates the use of Feast as part of a real-time credit scoring application.
 * The primary training dataset is a loan table. This table contains historic loan data with accompanying features. The dataset also contains a target variable, namely whether a user has defaulted on their loan.
@@ -17,6 +17,13 @@ This tutorial demonstrates the use of Feast as part of a real-time credit scorin
 
 
 ## Setup
+ 
+Setup Postgresql and Redis by docker:  
+
+```
+docker run -d --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
+docker run -p 6379:6379 -d --name redis  bitnami/redis:latest
+```
 
 ### Setting up Feast
 
@@ -42,10 +49,6 @@ cd feature_repo/
 feast apply
 ```
 ```
-Registered entity dob_ssn
-Registered entity zipcode
-Registered feature view credit_history
-Registered feature view zipcode_features
 Deploying infrastructure for credit_history
 Deploying infrastructure for zipcode_features
 ```
