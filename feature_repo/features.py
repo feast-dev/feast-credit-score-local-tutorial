@@ -15,7 +15,7 @@ zipcode = Entity(name="zipcode", value_type=ValueType.INT64)
 
 zipcode_source = FileSource(
     name="Zipcode source",
-    path="../data/zipcode_table.parquet",
+    path="data/zipcode_table.parquet",
     file_format=ParquetFormat(),
     timestamp_field="event_timestamp",
     created_timestamp_column="created_timestamp",
@@ -44,7 +44,7 @@ dob_ssn = Entity(
 
 credit_history_source = FileSource(
     name="Credit history",
-    path="..//data/credit_history.parquet",
+    path="data/credit_history.parquet",
     file_format=ParquetFormat(),
     timestamp_field="event_timestamp",
     created_timestamp_column="created_timestamp",
