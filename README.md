@@ -1,28 +1,27 @@
 # Real-time Credit Scoring with Feast on Local Setup
 
 ## Overview
-
-Registry: Postgresql  
-Offline Storage: duckdb  
-Online Storage: Redis  
+This tutorial is built from the original **[feast-aws-credit-scoring-tutorial](https://github.com/feast-dev/feast-aws-credit-scoring-tutorial)**.  
 
 This tutorial demonstrates the use of Feast as part of a real-time credit scoring application.
 * The primary training dataset is a loan table. This table contains historic loan data with accompanying features. The dataset also contains a target variable, namely whether a user has defaulted on their loan.
-* Feast is used during training to enrich the loan table with zipcode and credit history features from a S3 files. The S3 files are queried through Redshift.
-* Feast is also used to serve the latest zipcode and credit history features for online credit scoring using DynamoDB.
+* Feast is used during training to enrich the loan table with zipcode and credit history features from the **data** folder.
+* Feast is also used to serve the latest zipcode and credit history features for online credit scoring using Redis
 
 ## Requirements
 
 * Python 3.11
-
+* Registry: Postgresql  
+* Offline Storage: duckdb  
+* Online Storage: Redis
 
 ## Setup
  
 Setup Postgresql and Redis by docker:  
 
 ```
-docker run -d --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
-docker run -p 6379:6379 -d --name redis  bitnami/redis:latest
+docker run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
+docker run -d -p 6379:6379 --name redis  bitnami/redis:latest
 ```
 
 ### Setting up Feast
@@ -30,18 +29,10 @@ docker run -p 6379:6379 -d --name redis  bitnami/redis:latest
 Install Feast using pip
 
 ```
-pip install feast
+pip install feast[postgres, redis, duckdb]
 ```
 
-We have already set up a feature repository in [feature_repo/](feature_repo/). It isn't necessary to create a new
-feature repository, but it can be done using the following command
-```
-feast init -t aws feature_repo # Command only shown for reference.
-```
-
-Since we don't need to `init` a new repository, all we have to do is configure the 
-[feature_store.yaml/](feature_repo/feature_store.yaml) in the feature repository. Please set the fields under
-`offline_store` to the configuration you have received when deploying your Redshift cluster and S3 bucket.
+We have already set up a feature repository in [feature_repo/](feature_repo/). As a result, all we have to do is configure the [feature_store.yaml/](feature_repo/feature_store.yaml) in the feature repository. Please set the connection string of the Postgresql and Redis according to your local infra setup.  
 
 Deploy the feature store by running `apply` from within the `feature_repo/` folder
 ```
@@ -68,8 +59,7 @@ cd ..
 
 ## Train and test the model
 
-Finally, we train the model using a combination of loan data from S3 and our zipcode and credit history features from Redshift
-(which in turn queries S3), and then we test online inference by reading those same features from DynamoDB 
+Finally, we train the model using a combination of loan data from the parque file under the `./data` folder and our zipcode and credit history features from duckdb (with Filesource). And then we test online inference by reading those same features from Redis.
 
 ```
 python run.py
