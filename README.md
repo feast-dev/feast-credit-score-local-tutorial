@@ -29,7 +29,7 @@ docker run -d -p 6379:6379 --name redis  bitnami/redis:latest
 Install Feast using pip
 
 ```
-pip install feast[postgres, redis, duckdb]
+pip install -r requirements.txt
 ```
 
 We have already set up a feature repository in [feature_repo/](feature_repo/). As a result, all we have to do is configure the [feature_store.yaml/](feature_repo/feature_store.yaml) in the feature repository. Please set the connection string of the Postgresql and Redis according to your local infra setup.  

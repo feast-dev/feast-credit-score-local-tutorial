@@ -96,17 +96,21 @@ elif result == 1:
 # Feature importance
 st.header("Feature Importance")
 X = pd.read_parquet("data/training_dataset_sample.parquet")
-explainer = shap.TreeExplainer(model.classifier)
-shap_values = explainer.shap_values(X)
+print(X.shape)
+#explainer = shap.TreeExplainer(model.classifier)
+explainer = shap.Explainer(model.classifier, X)
+shap_values = explainer(X)
 left, mid, right = st.columns(3)
 with left:
     plt.title("Feature importance based on SHAP values")
-    shap.summary_plot(shap_values[1], X)
-    st.set_option("deprecation.showPyplotGlobalUse", False)
-    st.pyplot(bbox_inches="tight")
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    shap.plots.beeswarm(shap_values[:,:,1], show=True)
+    st.pyplot(bbox_inches='tight')
     st.write("---")
 
 with mid:
     plt.title("Feature importance based on SHAP values (Bar)")
-    shap.summary_plot(shap_values, X, plot_type="bar")
-    st.pyplot(bbox_inches="tight")
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    shap.plots.bar(shap_values[:,:,1], show=True)
+    st.pyplot(bbox_inches='tight')
+   
