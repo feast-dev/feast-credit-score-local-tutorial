@@ -17,12 +17,28 @@ This tutorial demonstrates the use of Feast as part of a real-time credit scorin
 
 ## Setup
  
-Setup Postgresql and Redis by docker:  
+You can setup the storages with Podman or Docker:  
 
+1. Setup Postgresql and Redis by [Podman](https://podman.io/):  
 ```
+podman pull docker://bitnami/postgresql  
+podman run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" docker.io/bitnami/postgresql:latest  
+
+podman pull docker://bitnami/redis:latest
+podman run -d -p 6379:6379 --name redis docker.io/bitnami/redis:latest  
+```
+
+
+2. Setup Postgresql and Redis by Docker:  
+```
+docker pull bitnami/postgresql:latest
 docker run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
+
+docker pull bitnami/postgresql:latest
 docker run -d -p 6379:6379 --name redis  bitnami/redis:latest
 ```
+
+Please **create** a database named "feast" for Feast's SQL Registry service. It is required by the Registry setting in the **feature_store.yaml**. Feel free to use other names, but to make sure that they are the same and consistent.
 
 ### Setting up Feast
 
