@@ -34,6 +34,7 @@ class CreditScoringModel:
         "credit_history:missed_payments_1y",
         "credit_history:missed_payments_6m",
         "credit_history:bankruptcies",
+        "total_debt_calc:total_debt_due",
     ]
 
     target = "loan_status"
@@ -119,9 +120,10 @@ class CreditScoringModel:
     def _get_online_features_from_feast(self, request):
         zipcode = request["zipcode"][0]
         dob_ssn = request["dob_ssn"][0]
+        loan_amount= request["loan_amount"][0]
 
         return self.fs.get_online_features(
-            entity_rows=[{"zipcode": zipcode, "dob_ssn": dob_ssn}],
+            entity_rows=[{"zipcode": zipcode, "dob_ssn": dob_ssn, "loan_amount": loan_amount}],
             features=self.feast_features,
         ).to_dict()
 
