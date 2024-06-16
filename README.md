@@ -40,6 +40,19 @@ docker run -d -p 6379:6379 --name redis  bitnami/redis:latest
 
 Please **create** a database named "feast" for Feast's SQL Registry service. It is required by the Registry setting in the **feature_store.yaml**. Feel free to use other names, but to make sure that they are the same and consistent.
 
+This can be done via:
+```bash
+% psql postgresql://postgres@localhost:5432
+psql (13.4, server 16.3)
+WARNING: psql major version 13, server major version 16.
+         Some psql features might not work.
+Type "help" for help.
+
+postgres=# create database feast
+postgres-# ;
+CREATE DATABASE
+```
+
 ### Setting up Feast
 
 Install Feast using pip

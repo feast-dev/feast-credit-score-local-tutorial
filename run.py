@@ -5,6 +5,7 @@ from credit_model import CreditScoringModel
 
 # Get historic loan data
 loans = pd.read_parquet("data/loan_table.parquet")
+loans['loan_amount'] = 35000
 
 # Create model
 model = CreditScoringModel()
@@ -23,6 +24,7 @@ loan_request = {
     "person_emp_length": [123.0],
     "loan_intent": ["PERSONAL"],
     "loan_amnt": [35000],
+    "loan_amount": [35000],
     "loan_int_rate": [16.02],
 }
 

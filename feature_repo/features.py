@@ -2,14 +2,17 @@
 
 from datetime import timedelta
 
+import pandas as pd
 from feast.value_type import ValueType
 from feast.entity import Entity
-from feast.types import String, Int64
+from feast.types import String, Int64, Float64
 from feast.feature_view import FeatureView
+from feast.on_demand_feature_view import on_demand_feature_view
 from feast.field import Field
 from feast.infra.offline_stores.file_source import FileSource
-from feast.data_format import  ParquetFormat
-
+from feast.data_format import ParquetFormat
+from feast import RequestSource
+from typing import Any
 
 zipcode = Entity(name="zipcode", value_type=ValueType.INT64)
 
@@ -67,3 +70,33 @@ credit_history = FeatureView(
     ],
     source=credit_history_source,
 )
+
+input_request = RequestSource(
+    name="application_data",
+    schema=[
+        Field(name='loan_amount', dtype=Int64),
+    ]
+)
+
+@on_demand_feature_view(
+   sources=[
+       credit_history,
+       input_request,
+   ],
+   schema=[
+     Field(name='total_debt_due', dtype=Float64),
+   ],
+   mode="pandas",
+)
+def total_debt_calc(features_df: pd.DataFrame) -> pd.DataFrame:
+    df = pd.DataFrame()
+    if 'loan_amount' not in features_df:
+        features_df['loan_amount'] = 35000
+
+    df['total_debt_due'] = (
+        features_df['credit_card_due'] + features_df['mortgage_due'] + 
+        features_df['student_loan_due'] + features_df['vehicle_loan_due'] + 
+        features_df['loan_amount']
+    ).astype(float)
+    return df 
+
