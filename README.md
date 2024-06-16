@@ -109,3 +109,12 @@ streamlit run streamlit_app.py
 Then navigate to the URL on which Streamlit is being served. You should see a user interface through which loan applications can be made:
 
 ![Streamlit Loan Application](streamlit.png)
+
+## Serving Demo and OpenAPI docs
+
+You can run
+```bash
+python app.py
+```
+And you'll be able to see the endpoints by going to http://127.0.0.1:8888/docs#/.
+

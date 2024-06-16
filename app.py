@@ -7,7 +7,7 @@ def main():
     start_server(
         store=store, 
         host='localhost', 
-        port=8080, 
+        port=8888, 
         no_access_log=False, 
         workers=2, 
         keep_alive_timeout=1, 
