@@ -34,8 +34,8 @@ podman run -d -p 6379:6379 --name redis docker.io/bitnami/redis:latest
 docker pull bitnami/postgresql:latest
 docker run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
 
-docker pull bitnami/postgresql:latest
-docker run -d -p 6379:6379 --name redis  bitnami/redis:latest
+docker pull bitnami/redis:latest
+docker run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/redis:latest
 ```
 
 Please **create** a database named "feast" for Feast's SQL Registry service. It is required by the Registry setting in the **feature_store.yaml**. Feel free to use other names, but to make sure that they are the same and consistent.
