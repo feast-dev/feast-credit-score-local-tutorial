@@ -69,7 +69,6 @@ st.title("Loan Application")
 st.header("User input:")
 loan_request = get_loan_request()
 df = pd.DataFrame.from_dict(loan_request)
-df
 
 # Full feature vector
 st.header("Feature vector (user input + zipcode features + user features):")
@@ -81,7 +80,6 @@ for vector_key in key_list:
     if vector_key not in ordered_vector:
         ordered_vector[vector_key] = vector[vector_key]
 df = pd.DataFrame.from_dict(ordered_vector)
-df
 
 # Results of prediction
 st.header("Application Status (model prediction):")
@@ -103,14 +101,14 @@ shap_values = explainer(X)
 left, mid, right = st.columns(3)
 with left:
     plt.title("Feature importance based on SHAP values")
-    st.set_option('deprecation.showPyplotGlobalUse', False)
+    #st.set_option('deprecation.showPyplotGlobalUse', False)
     shap.plots.beeswarm(shap_values[:,:,1], show=True)
     st.pyplot(bbox_inches='tight')
     st.write("---")
 
 with mid:
     plt.title("Feature importance based on SHAP values (Bar)")
-    st.set_option('deprecation.showPyplotGlobalUse', False)
+    #st.set_option('deprecation.showPyplotGlobalUse', False)
     shap.plots.bar(shap_values[:,:,1], show=True)
     st.pyplot(bbox_inches='tight')
    

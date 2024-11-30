@@ -74,7 +74,7 @@ credit_history = FeatureView(
 input_request = RequestSource(
     name="application_data",
     schema=[
-        Field(name='loan_amount', dtype=Int64),
+        Field(name='loan_amnt', dtype=Int64),
     ]
 )
 
@@ -90,13 +90,10 @@ input_request = RequestSource(
 )
 def total_debt_calc(features_df: pd.DataFrame) -> pd.DataFrame:
     df = pd.DataFrame()
-    if 'loan_amount' not in features_df:
-        features_df['loan_amount'] = 35000
-
     df['total_debt_due'] = (
         features_df['credit_card_due'] + features_df['mortgage_due'] + 
         features_df['student_loan_due'] + features_df['vehicle_loan_due'] + 
-        features_df['loan_amount']
+        features_df['loan_amnt']
     ).astype(float)
     return df 
 

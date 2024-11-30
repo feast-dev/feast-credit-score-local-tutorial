@@ -120,10 +120,10 @@ class CreditScoringModel:
     def _get_online_features_from_feast(self, request):
         zipcode = request["zipcode"][0]
         dob_ssn = request["dob_ssn"][0]
-        loan_amount= request["loan_amount"][0]
+        loan_amnt= request["loan_amnt"][0]
 
         return self.fs.get_online_features(
-            entity_rows=[{"zipcode": zipcode, "dob_ssn": dob_ssn, "loan_amount": loan_amount}],
+            entity_rows=[{"zipcode": zipcode, "dob_ssn": dob_ssn, "loan_amnt": loan_amnt}],
             features=self.feast_features,
         ).to_dict()
 
