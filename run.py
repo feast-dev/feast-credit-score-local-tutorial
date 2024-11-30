@@ -1,20 +1,18 @@
-import boto3
 import pandas as pd
 
 from credit_model import CreditScoringModel
 
 # Get historic loan data
 loans = pd.read_parquet("data/loan_table.parquet")
-loans['loan_amount'] = 35000
 
 # Create model
 model = CreditScoringModel()
 
-# Train model (using Redshift for zipcode and credit history features)
+# Train model (using Postgres for zipcode and credit history features)
 if not model.is_model_trained():
     model.train(loans)
 
-# Make online prediction (using DynamoDB for retrieving online features)
+# Make online prediction (using Redis for retrieving online features)
 loan_request = {
     "zipcode": [76104],
     "dob_ssn": ["19630621_4278"],
@@ -24,7 +22,6 @@ loan_request = {
     "person_emp_length": [123.0],
     "loan_intent": ["PERSONAL"],
     "loan_amnt": [35000],
-    "loan_amount": [35000],
     "loan_int_rate": [16.02],
 }
 

@@ -1,7 +1,7 @@
 project: credit_scoring_local
 registry: 
     registry_type: sql
-    path: postgresql://postgres@localhost:5432/feast
+    path: postgresql+psycopg2://postgres@localhost:5432/feast
     cache_ttl_seconds: 60
     sqlalchemy_config_kwargs:
         echo: false
