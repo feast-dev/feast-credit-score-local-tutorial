@@ -3,3 +3,8 @@ shap
 pandas
 scikit-learn
 matplotlib
+feast
+ibis-framework
+redis
+duckdb
+pyarrow_hotfix
