@@ -8,3 +8,4 @@ infra/*.tfvars.json
 *.tfstate*
 *.terraform*
 generate_data.py
+**.ipynb_checkpoints**
