@@ -81,6 +81,12 @@ CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%S")
 feast materialize-incremental $CURRENT_TIME
 ```
 
+Alternatively, you may have to run
+```
+CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%S")
+feast materialize 1990-01-00T00:00:00  $CURRENT_TIME
+```
+
 Return to the root of the repository
 ```
 cd ..
