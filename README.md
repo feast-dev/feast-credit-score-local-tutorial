@@ -8,6 +8,9 @@ This tutorial demonstrates the use of Feast as part of a real-time credit scorin
 * Feast is used during training to enrich the loan table with zipcode and credit history features from the **data** folder.
 * Feast is also used to serve the latest zipcode and credit history features for online credit scoring using Redis
 
+To get a better feel of what this example entails, you can view the steps outlined below in notebook 
+form in [demo_walkthrough.ipynb](demo_walkthrough.ipynb).
+
 ## Requirements
 
 * Python 3.11
@@ -16,6 +19,8 @@ This tutorial demonstrates the use of Feast as part of a real-time credit scorin
 * Online Storage: Redis
 
 ## Setup
+
+### Database Setup
  
 You can setup the storages with Podman or Docker:  
 
@@ -52,6 +57,18 @@ postgres=# create database feast
 postgres-# ;
 CREATE DATABASE
 ```
+
+### Pointing to remote databases
+
+Rather than provisioning the storage providers locally, you can also provision
+them remotely and point to them in [feature_store.yaml](feature_repo/feature_store.yaml)
+by specifying the following environment variables:
+
+  * POSTGRES_HOST
+  * POSTGRES_USER
+  * POSTGRES_PASSWORD
+  * POSTGRES_DB
+  * REDIS_HOST
 
 ### Setting up Feast
 
