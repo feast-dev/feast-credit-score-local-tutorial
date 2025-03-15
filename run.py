@@ -10,7 +10,11 @@ model = CreditScoringModel()
 
 # Train model (using Postgres for zipcode and credit history features)
 if not model.is_model_trained():
+    print('Starting model training...')
     model.train(loans)
+    print('Model has been trained successfully')
+else:
+    print('Model was already trained in a previous run')
 
 # Make online prediction (using Redis for retrieving online features)
 loan_request = {
@@ -25,6 +29,7 @@ loan_request = {
     "loan_int_rate": [16.02],
 }
 
+print(f'Submitting a prediction to the model with data {loan_request}')
 result = model.predict(loan_request)
 
 if result == 0:

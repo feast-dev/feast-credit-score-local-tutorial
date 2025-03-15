@@ -101,6 +101,9 @@ class CreditScoringModel:
         features = request.copy()
         features.update(feature_vector)
         features_df = pd.DataFrame.from_dict(features)
+        pd.set_option('display.max_columns', 15)
+        print('Data returned from online store for request:')
+        print(features_df[['dob_ssn', 'total_debt_due', 'credit_card_due', 'mortgage_due', 'student_loan_due', 'vehicle_loan_due', 'loan_amnt']])
 
         # Apply ordinal encoding to categorical features
         self._apply_ordinal_encoding(features_df)
