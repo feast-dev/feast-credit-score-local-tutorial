@@ -8,3 +8,4 @@ ibis-framework
 redis
 duckdb
 pyarrow_hotfix
+psycopg
