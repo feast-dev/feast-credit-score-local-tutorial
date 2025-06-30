@@ -363,3 +363,64 @@ portfolio_analysis_service = FeatureService(
     owner="analytics-team@company.com"
 )
 
+# =============================================================================
+# SIMPLE FEATURE SERVICES (No On-Demand Features - For Saved Datasets)
+# =============================================================================
+
+# Simple credit history service (batch features only)
+credit_history_service = FeatureService(
+    name="credit_history_v1",
+    features=[
+        credit_history,
+    ],
+    tags={"team": "risk", "version": "v1", "use_case": "credit_analysis", "complexity": "simple"},
+    description="Simple credit history feature set for historical analysis and model training",
+    owner="risk-team@company.com"
+)
+
+# Demographics analysis service (batch features only)
+demographics_service = FeatureService(
+    name="demographics_v1", 
+    features=[
+        person_demographics,
+    ],
+    tags={"team": "analytics", "version": "v1", "use_case": "demographic_analysis", "complexity": "simple"},
+    description="Demographic feature set for customer profiling and segmentation",
+    owner="analytics-team@company.com"
+)
+
+# Location intelligence service (batch features only)
+location_intelligence_service = FeatureService(
+    name="location_intelligence_v1",
+    features=[
+        zipcode_features,
+    ],
+    tags={"team": "risk", "version": "v1", "use_case": "location_analysis", "complexity": "simple"},
+    description="Geographic feature set for location-based risk assessment and market analysis",
+    owner="risk-team@company.com"
+)
+
+# Combined demographic and location service (batch features only)
+customer_profile_service = FeatureService(
+    name="customer_profile_v1",
+    features=[
+        person_demographics,
+        zipcode_features,
+    ],
+    tags={"team": "marketing", "version": "v1", "use_case": "customer_profiling", "complexity": "simple"},
+    description="Combined demographic and geographic features for comprehensive customer profiling",
+    owner="marketing-team@company.com"
+)
+
+# Credit and demographics combined service (batch features only)
+basic_underwriting_service = FeatureService(
+    name="basic_underwriting_v1", 
+    features=[
+        credit_history,
+        person_demographics,
+    ],
+    tags={"team": "underwriting", "version": "v1", "use_case": "basic_underwriting", "complexity": "simple"},
+    description="Basic underwriting feature set combining credit history and demographics",
+    owner="underwriting-team@company.com"
+)
+
