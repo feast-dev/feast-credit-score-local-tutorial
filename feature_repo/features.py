@@ -30,21 +30,24 @@ zipcode = Entity(
     name="zipcode", 
     value_type=ValueType.INT64,
     description="ZIP code identifier for geographic location-based features",
-    tags={"domain": "geography", "pii": "false", "join_key": "true", "cardinality": "high", "stability": "stable", "standardized": "true"}
+    tags={"domain": "geography", "pii": "false", "join_key": "true", "cardinality": "high", "stability": "stable", "standardized": "true"},
+    owner="data-team@company.com"
 )
 
 dob_ssn = Entity(
     name="dob_ssn",
     value_type=ValueType.STRING,
     description="Unique identifier combining date of birth and last four digits of SSN for customer identification",
-    tags={"domain": "customer", "pii": "true", "join_key": "true", "cardinality": "high", "sensitive": "critical", "regulatory": "privacy_protected"}
+    tags={"domain": "customer", "pii": "true", "join_key": "true", "cardinality": "high", "sensitive": "critical", "regulatory": "privacy_protected"},
+    owner="risk-team@company.com"
 )
 
 loan_id = Entity(
     name="loan_id",
     value_type=ValueType.STRING,
     description="Unique identifier for each loan application",
-    tags={"domain": "loan", "pii": "false", "join_key": "true", "cardinality": "high", "business_key": "true", "transactional": "true"}
+    tags={"domain": "loan", "pii": "false", "join_key": "true", "cardinality": "high", "business_key": "true", "transactional": "true"},
+    owner="risk-team@company.com"
 )
 
 # =============================================================================
@@ -58,7 +61,8 @@ zipcode_source = FileSource(
     timestamp_field="event_timestamp",
     created_timestamp_column="created_timestamp",
     description="Geographic and demographic data aggregated by ZIP code",
-    tags={"source_system": "census_bureau", "data_type": "reference", "update_frequency": "annual", "quality": "high", "external": "true", "public_data": "true"}
+    tags={"source_system": "census_bureau", "data_type": "reference", "update_frequency": "annual", "quality": "high", "external": "true", "public_data": "true"},
+    owner="data-team@company.com"
 )
 
 credit_history_source = FileSource(
@@ -68,7 +72,8 @@ credit_history_source = FileSource(
     timestamp_field="event_timestamp",
     created_timestamp_column="created_timestamp",
     description="Historical credit data including payment history and outstanding debts",
-    tags={"source_system": "credit_bureau", "data_type": "transactional", "update_frequency": "daily", "quality": "critical", "external": "true", "sensitive": "high", "cost": "high"}
+    tags={"source_system": "credit_bureau", "data_type": "transactional", "update_frequency": "daily", "quality": "critical", "external": "true", "sensitive": "high", "cost": "high"},
+    owner="risk-team@company.com"
 )
 
 loan_table_source = FileSource(
@@ -78,7 +83,8 @@ loan_table_source = FileSource(
     timestamp_field="event_timestamp",
     created_timestamp_column="created_timestamp",
     description="Loan application data including personal and loan characteristics",
-    tags={"source_system": "loan_origination", "data_type": "operational", "update_frequency": "real_time", "quality": "high", "internal": "true", "business_critical": "true", "latency": "low"}
+    tags={"source_system": "loan_origination", "data_type": "operational", "update_frequency": "real_time", "quality": "high", "internal": "true", "business_critical": "true", "latency": "low"},
+    owner="risk-team@company.com"
 )
 
 # Streaming sources removed for compatibility
@@ -196,7 +202,9 @@ input_request = RequestSource(
         Field(name='person_income', dtype=Int64, description="Applicant's annual income",
               tags={"type": "numerical", "pii": "true", "request_time": "true", "currency": "USD", "verification": "required"}),
     ],
-    description="Real-time loan application data provided at inference time"
+    description="Real-time loan application data provided at inference time",
+    tags={"data_type": "request", "latency": "real_time"},
+    owner="risk-team@company.com"
 )
 
 # =============================================================================

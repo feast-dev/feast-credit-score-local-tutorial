@@ -76,7 +76,7 @@ def create_ui_visible_datasets():
                 path="data/credit_score_training_v1", 
                 file_format=ParquetFormat()
             ),
-            tags={'author': 'ML_Team', 'purpose': 'training', 'version': 'v1'},
+            tags={'author': 'ml-team@company.com', 'purpose': 'training', 'version': 'v1'},
             allow_overwrite=True
         )
         
@@ -125,7 +125,7 @@ def create_ui_visible_datasets():
                 path="data/credit_history_analysis_v1",
                 file_format=ParquetFormat()
             ),
-            tags={'author': 'Risk_Team', 'purpose': 'analysis', 'version': 'v1'},
+            tags={'author': 'risk-team@company.com', 'purpose': 'analysis', 'version': 'v1'},
             allow_overwrite=True
         )
         
@@ -173,7 +173,7 @@ def create_ui_visible_datasets():
                 path="data/demographics_profile_v1",
                 file_format=ParquetFormat()
             ),
-            tags={'author': 'Data_Team', 'purpose': 'profiling', 'version': 'v1'},
+            tags={'author': 'data-team@company.com', 'purpose': 'profiling', 'version': 'v1'},
             allow_overwrite=True
         )
         
@@ -223,7 +223,7 @@ def create_ui_visible_datasets():
                 path="data/comprehensive_credit_dataset_v1",
                 file_format=ParquetFormat()
             ),
-            tags={'author': 'ML_Team', 'purpose': 'comprehensive_analysis', 'version': 'v1'},
+            tags={'author': 'ml-team@company.com', 'purpose': 'comprehensive_analysis', 'version': 'v1'},
             allow_overwrite=True
         )
         
@@ -306,7 +306,7 @@ def create_working_feature_service_datasets():
             ),
             feature_service=feature_service,
             tags={
-                'author': 'Risk_Team', 
+                'author': 'risk-team@company.com', 
                 'purpose': 'credit_analysis', 
                 'version': 'v1',
                 'feature_service': 'credit_history_v1',
@@ -358,7 +358,7 @@ def create_working_feature_service_datasets():
             ),
             feature_service=feature_service,
             tags={
-                'author': 'Analytics_Team', 
+                'author': 'analytics-team@company.com', 
                 'purpose': 'demographic_analysis', 
                 'version': 'v1',
                 'feature_service': 'demographics_v1',
@@ -410,7 +410,7 @@ def create_working_feature_service_datasets():
             ),
             feature_service=feature_service,
             tags={
-                'author': 'Risk_Team', 
+                'author': 'risk-team@company.com', 
                 'purpose': 'location_analysis', 
                 'version': 'v1',
                 'feature_service': 'location_intelligence_v1',
@@ -462,7 +462,7 @@ def create_working_feature_service_datasets():
             ),
             feature_service=feature_service,
             tags={
-                'author': 'Marketing_Team', 
+                'author': 'marketing-team@company.com', 
                 'purpose': 'customer_profiling', 
                 'version': 'v1',
                 'feature_service': 'customer_profile_v1',
@@ -513,7 +513,7 @@ def create_working_feature_service_datasets():
             ),
             feature_service=feature_service,
             tags={
-                'author': 'Underwriting_Team', 
+                'author': 'underwriting-team@company.com', 
                 'purpose': 'basic_underwriting', 
                 'version': 'v1',
                 'feature_service': 'basic_underwriting_v1',
