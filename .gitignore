@@ -9,3 +9,5 @@ infra/*.tfvars.json
 *.terraform*
 generate_data.py
 **.ipynb_checkpoints**
+# the trained model
+mode.bin

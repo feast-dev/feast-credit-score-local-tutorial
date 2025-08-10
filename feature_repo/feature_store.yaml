@@ -1,7 +1,7 @@
 project: credit_scoring_local
 registry: 
     registry_type: sql
-    path: postgresql+psycopg://${POSTGRES_USER:=postgres}:${POSTGRES_PASSWORD}@${POSTGRES_HOST:=localhost}:5432/${POSTGRES_DB:=feast}
+    path: "postgresql+psycopg://postgres@localhost:5432/feast"
     cache_ttl_seconds: 60
     sqlalchemy_config_kwargs:
         echo: false
@@ -9,7 +9,7 @@ registry:
 provider: local
 online_store:
     type: redis
-    connection_string: "${REDIS_HOST:=localhost}:6379"
+    connection_string: "localhost:6379"
 offline_store:
     type: duckdb
 entity_key_serialization_version: 2

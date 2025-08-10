@@ -58,24 +58,12 @@ postgres-# ;
 CREATE DATABASE
 ```
 
-### Pointing to remote databases
-
-Rather than provisioning the storage providers locally, you can also provision
-them remotely and point to them in [feature_store.yaml](feature_repo/feature_store.yaml)
-by specifying the following environment variables:
-
-  * POSTGRES_HOST
-  * POSTGRES_USER
-  * POSTGRES_PASSWORD
-  * POSTGRES_DB
-  * REDIS_HOST
-
 ### Setting up Feast
 
-Install Feast using pip
+Install Feast using uv
 
 ```
-pip install -r requirements.txt
+uv sync  
 ```
 
 We have already set up a feature repository in [feature_repo/](feature_repo/). As a result, all we have to do is configure the [feature_store.yaml/](feature_repo/feature_store.yaml) in the feature repository. Please set the connection string of the Postgresql and Redis according to your local infra setup.  

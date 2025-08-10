@@ -1,0 +1,20 @@
+[project]
+name = "feast-credit-score-local-tutorial"
+version = "0.1.0"
+description = "A local demo project of Feast feature server."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "feast",
+    "streamlit==1.42.0",
+    "shap",
+    "pandas",
+    "scikit-learn",
+    "matplotlib",
+    "feast",
+    "ibis-framework",
+    "redis",
+    "duckdb",
+    "pyarrow_hotfix",
+    "psycopg",
+]
