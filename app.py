@@ -11,8 +11,6 @@ def main():
         no_access_log=False, 
         workers=2, 
         keep_alive_timeout=1,
-        tls_key_path="",
-        tls_cert_path="", 
         registry_ttl_sec=10,
     )    
 
