@@ -30,22 +30,17 @@ podman pull docker://bitnami/postgresql
 podman run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" docker.io/bitnami/postgresql:latest  
 
 podman pull docker://bitnami/redis:latest
-podman run -d -p 6379:6379 --name redis docker.io/bitnami/redis:latest  
-```
-
-
-2. Setup Postgresql and Redis by Docker:  
-```
-docker pull bitnami/postgresql:latest
-docker run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/postgresql:latest
-
-docker pull bitnami/redis:latest
-docker run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes" bitnami/redis:latest
+podman run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes"  docker.io/bitnami/redis:latest  
 ```
 
 Please **create** a database named "feast" for Feast's SQL Registry service. It is required by the Registry setting in the **feature_store.yaml**. Feel free to use other names, but to make sure that they are the same and consistent.
 
 This can be done via:
+1. First login into the running container:
+```
+podman exec -it [your_container_id] /bin/bash
+```
+Then run:
 ```bash
 % psql postgresql://postgres@localhost:5432
 psql (13.4, server 16.3)
@@ -73,9 +68,26 @@ Deploy the feature store by running `apply` from within the `feature_repo/` fold
 cd feature_repo/
 feast apply
 ```
+If you meet the following errors:
 ```
-Deploying infrastructure for credit_history
-Deploying infrastructure for zipcode_features
+ImportError: no pq wrapper available.
+Attempts made:
+- couldn't import psycopg 'c' implementation: No module named 'psycopg_c'
+- couldn't import psycopg 'binary' implementation: No module named 'psycopg_binary'
+- couldn't import psycopg 'python' implementation: libpq library not found
+```
+You may need to install `libpq` library of PostgreSQL.
+Linux (Debian):
+```
+sudo apt-get install libpq-dev
+```
+Linux (RHEL/CentOS/Fedora)
+```
+sudo yum install postgresql-devel
+```
+macOS(Homebrew)
+```
+brew install postgresql
 ```
 
 Next we load features into the online store using the `materialize-incremental` command. This command will load the
@@ -108,18 +120,6 @@ The script should then output the result of a single loan application
 ```
 loan rejected!
 ```
-
-## Interactive demo (using Streamlit)
-
-Once the credit scoring model has been trained it can be used for interactive loan applications using Streamlit:
-
-Simply start the Streamlit application
-```
-streamlit run streamlit_app.py
-```
-Then navigate to the URL on which Streamlit is being served. You should see a user interface through which loan applications can be made:
-
-![Streamlit Loan Application](streamlit.png)
 
 ## Serving Demo and OpenAPI docs
 
