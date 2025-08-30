@@ -17,4 +17,3 @@ go_feature_serving: True
 feature_server:
     type: local
     transformation_service_endpoint: "localhost:6569"
-    
