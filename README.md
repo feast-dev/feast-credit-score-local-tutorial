@@ -57,7 +57,7 @@ feast materialize-incremental $CURRENT_TIME
 Alternatively, you may have to run
 ```
 CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%S")
-feast materialize 1990-01-00T00:00:00  $CURRENT_TIME
+feast materialize 1990-01-01T00:00:00  $CURRENT_TIME
 ```
 
 Return to the root of the repository
@@ -86,11 +86,11 @@ And you'll be able to see the endpoints by going to http://127.0.0.1:8888/docs#/
 
 
 ### Go Feature Server Demo
-Current the Go Feature Server only suports "file", AWS "s3" and GCP "gs" storage. In this demo, we choose "file.
+Current the Go Feature Server only supports "file", AWS "s3" and GCP "gs" storage. In this demo, we choose "file.
 Steps:
 1. terminate the previous running `app.py` if it is still running.  
 2. start the Feast feature transformation server:
     `python app_with_transformation_server.py`  
 3. start the Go feature server, assume you have built the Go binary and named it as 'feast':  
     `./feast -chdir ./feature_repo`
-4. test the URI "http://localhost:8080/heath". We suppose to see 'Healthy' word be displayed.   
+4. test the URI "http://localhost:8080/health". We suppose to see 'Healthy' word be displayed.   
