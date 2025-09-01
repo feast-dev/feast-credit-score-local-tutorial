@@ -9,7 +9,7 @@ online_store:
 offline_store:
     type: dask
 entity_key_serialization_version: 2
-go_feature_serving: True
+go_feature_serving: true
 feature_server:
     type: local
     transformation_service_endpoint: "localhost:6569"
