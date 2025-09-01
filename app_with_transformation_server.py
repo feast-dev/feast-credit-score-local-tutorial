@@ -10,6 +10,6 @@ def main():
     # default port is 6569
     store.serve_transformations(6569)
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     main()
 

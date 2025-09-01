@@ -94,3 +94,39 @@ Steps:
 3. start the Go feature server, assume you have built the Go binary and named it as 'feast':  
     `./feast -chdir ./feature_repo`
 4. test the URI "http://localhost:8080/health". We suppose to see 'Healthy' word be displayed.   
+5. test the following post for testing get-online-features. Make sure the `feast materialize` command have executed.
+```
+curl -X POST \
+"http://localhost:8080/get-online-features" \
+-d '{
+    "features": [
+        "zipcode_features:city",
+        "zipcode_features:state",
+        "zipcode_features:location_type",
+        "zipcode_features:tax_returns_filed",
+        "zipcode_features:population",
+        "zipcode_features:total_wages",
+        "credit_history:credit_card_due",
+        "credit_history:mortgage_due",
+        "credit_history:student_loan_due",
+        "credit_history:vehicle_loan_due",
+        "credit_history:hard_pulls",
+        "credit_history:missed_payments_2y",
+        "credit_history:missed_payments_1y",
+        "credit_history:missed_payments_6m",
+        "credit_history:bankruptcies",
+        "total_debt_calc:total_debt_due"
+    ],
+    "entities": {
+        "dob_ssn": [
+            "19630621_4278"
+        ],
+        "zipcode": [
+            76104
+        ],
+        "loan_amnt": [
+            35000
+        ]
+    }
+}' | jq
+```
