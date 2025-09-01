@@ -130,3 +130,122 @@ curl -X POST \
     }
 }' | jq
 ```
+Example returned feature values:
+```
+{
+    "metadata": {
+        "feature_names": [
+            "dob_ssn",
+            "zipcode",
+            "city",
+            "state",
+            "location_type",
+            "tax_returns_filed",
+            "population",
+            "total_wages",
+            "credit_card_due",
+            "mortgage_due",
+            "student_loan_due",
+            "vehicle_loan_due",
+            "hard_pulls",
+            "missed_payments_2y",
+            "missed_payments_1y",
+            "missed_payments_6m",
+            "bankruptcies",
+            "total_debt_due"
+        ]
+    },
+    "results": [
+        {
+            "values": [
+                "19630621_4278"
+            ]
+        },
+        {
+            "values": [
+                76104
+            ]
+        },
+        {
+            "values": [
+                "FORT WORTH"
+            ]
+        },
+        {
+            "values": [
+                "TX"
+            ]
+        },
+        {
+            "values": [
+                "PRIMARY"
+            ]
+        },
+        {
+            "values": [
+                6058
+            ]
+        },
+        {
+            "values": [
+                10534
+            ]
+        },
+        {
+            "values": [
+                142325465
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        }
+    ]
+}
+```
