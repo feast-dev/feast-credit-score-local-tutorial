@@ -1,15 +1,15 @@
 project: credit_scoring_local
 registry: 
-    registry_type: sql
-    path: "postgresql+psycopg://postgres@localhost:5432/feast"
+    path: registry.db
     cache_ttl_seconds: 60
-    sqlalchemy_config_kwargs:
-        echo: false
-        pool_pre_ping: true
 provider: local
 online_store:
     type: redis
     connection_string: "localhost:6379"
 offline_store:
-    type: duckdb
+    type: dask
 entity_key_serialization_version: 2
+go_feature_serving: true
+feature_server:
+    type: local
+    transformation_service_endpoint: "localhost:6569"

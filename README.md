@@ -24,33 +24,10 @@ form in [demo_walkthrough.ipynb](demo_walkthrough.ipynb).
  
 You can setup the storages with Podman or Docker:  
 
-1. Setup Postgresql and Redis by [Podman](https://podman.io/):  
+1. Setup an online store with Redis by [Podman](https://podman.io/):  
 ```
-podman pull docker://bitnami/postgresql  
-podman run -d -p 5432:5432 --name postgresql -e "ALLOW_EMPTY_PASSWORD=yes" docker.io/bitnami/postgresql:latest  
-
 podman pull docker://bitnami/redis:latest
 podman run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes"  docker.io/bitnami/redis:latest  
-```
-
-Please **create** a database named "feast" for Feast's SQL Registry service. It is required by the Registry setting in the **feature_store.yaml**. Feel free to use other names, but to make sure that they are the same and consistent.
-
-This can be done via:
-1. First login into the running container:
-```
-podman exec -it [your_container_id] /bin/bash
-```
-Then run:
-```bash
-% psql postgresql://postgres@localhost:5432
-psql (13.4, server 16.3)
-WARNING: psql major version 13, server major version 16.
-         Some psql features might not work.
-Type "help" for help.
-
-postgres=# create database feast
-postgres-# ;
-CREATE DATABASE
 ```
 
 ### Setting up Feast
@@ -68,27 +45,6 @@ Deploy the feature store by running `apply` from within the `feature_repo/` fold
 cd feature_repo/
 feast apply
 ```
-If you meet the following errors:
-```
-ImportError: no pq wrapper available.
-Attempts made:
-- couldn't import psycopg 'c' implementation: No module named 'psycopg_c'
-- couldn't import psycopg 'binary' implementation: No module named 'psycopg_binary'
-- couldn't import psycopg 'python' implementation: libpq library not found
-```
-You may need to install `libpq` library of PostgreSQL.
-Linux (Debian):
-```
-sudo apt-get install libpq-dev
-```
-Linux (RHEL/CentOS/Fedora)
-```
-sudo yum install postgresql-devel
-```
-macOS(Homebrew)
-```
-brew install postgresql
-```
 
 Next we load features into the online store using the `materialize-incremental` command. This command will load the
 latest feature values from a data source into the online store.
@@ -101,7 +57,7 @@ feast materialize-incremental $CURRENT_TIME
 Alternatively, you may have to run
 ```
 CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%S")
-feast materialize 1990-01-00T00:00:00  $CURRENT_TIME
+feast materialize 1990-01-01T00:00:00  $CURRENT_TIME
 ```
 
 Return to the root of the repository
@@ -109,7 +65,7 @@ Return to the root of the repository
 cd ..
 ```
 
-## Train and test the model
+### Train and test the model
 
 Finally, we train the model using a combination of loan data from the parque file under the `./data` folder and our zipcode and credit history features from duckdb (with Filesource). And then we test online inference by reading those same features from Redis.
 
@@ -121,11 +77,175 @@ The script should then output the result of a single loan application
 loan rejected!
 ```
 
-## Serving Demo and OpenAPI docs
-
+### Serving Demo and OpenAPI docs
 You can run
 ```bash
 python app.py
 ```
 And you'll be able to see the endpoints by going to http://127.0.0.1:8888/docs#/.
 
+
+### Go Feature Server Demo
+Current the Go Feature Server only supports "file", AWS "s3" and GCP "gs" storage. In this demo, we choose "file".
+Steps:
+1. terminate the previous running `app.py` if it is still running.  
+2. start the Feast feature transformation server:
+    `python app_with_transformation_server.py`  
+3. start the Go feature server, assume you have built the Go binary and named it as 'feast':  
+    `./feast -chdir ./feature_repo`
+4. test the URI "http://localhost:8080/health". We suppose to see 'Healthy' word be displayed.   
+5. test the following post for testing get-online-features. Make sure the `feast materialize` command have executed.
+```
+curl -X POST \
+"http://localhost:8080/get-online-features" \
+-d '{
+    "features": [
+        "zipcode_features:city",
+        "zipcode_features:state",
+        "zipcode_features:location_type",
+        "zipcode_features:tax_returns_filed",
+        "zipcode_features:population",
+        "zipcode_features:total_wages",
+        "credit_history:credit_card_due",
+        "credit_history:mortgage_due",
+        "credit_history:student_loan_due",
+        "credit_history:vehicle_loan_due",
+        "credit_history:hard_pulls",
+        "credit_history:missed_payments_2y",
+        "credit_history:missed_payments_1y",
+        "credit_history:missed_payments_6m",
+        "credit_history:bankruptcies",
+        "total_debt_calc:total_debt_due"
+    ],
+    "entities": {
+        "dob_ssn": [
+            "19630621_4278"
+        ],
+        "zipcode": [
+            76104
+        ],
+        "loan_amnt": [
+            35000
+        ]
+    }
+}' | jq
+```
+Example returned feature values:
+```
+{
+    "metadata": {
+        "feature_names": [
+            "dob_ssn",
+            "zipcode",
+            "city",
+            "state",
+            "location_type",
+            "tax_returns_filed",
+            "population",
+            "total_wages",
+            "credit_card_due",
+            "mortgage_due",
+            "student_loan_due",
+            "vehicle_loan_due",
+            "hard_pulls",
+            "missed_payments_2y",
+            "missed_payments_1y",
+            "missed_payments_6m",
+            "bankruptcies",
+            "total_debt_due"
+        ]
+    },
+    "results": [
+        {
+            "values": [
+                "19630621_4278"
+            ]
+        },
+        {
+            "values": [
+                76104
+            ]
+        },
+        {
+            "values": [
+                "FORT WORTH"
+            ]
+        },
+        {
+            "values": [
+                "TX"
+            ]
+        },
+        {
+            "values": [
+                "PRIMARY"
+            ]
+        },
+        {
+            "values": [
+                6058
+            ]
+        },
+        {
+            "values": [
+                10534
+            ]
+        },
+        {
+            "values": [
+                142325465
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        },
+        {
+            "values": [
+                null
+            ]
+        }
+    ]
+}
+```
