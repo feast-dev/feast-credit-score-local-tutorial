@@ -86,7 +86,7 @@ And you'll be able to see the endpoints by going to http://127.0.0.1:8888/docs#/
 
 
 ### Go Feature Server Demo
-Current the Go Feature Server only supports "file", AWS "s3" and GCP "gs" storage. In this demo, we choose "file.
+Current the Go Feature Server only supports "file", AWS "s3" and GCP "gs" storage. In this demo, we choose "file".
 Steps:
 1. terminate the previous running `app.py` if it is still running.  
 2. start the Feast feature transformation server:

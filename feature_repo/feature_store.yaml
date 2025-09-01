@@ -5,7 +5,7 @@ registry:
 provider: local
 online_store:
     type: redis
-    connection_string: "${REDIS_HOST}:6379"
+    connection_string: "localhost:6379"
 offline_store:
     type: dask
 entity_key_serialization_version: 2
