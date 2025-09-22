@@ -8,7 +8,7 @@ online_store:
     connection_string: "localhost:6379"
 offline_store:
     type: dask
-entity_key_serialization_version: 2
+entity_key_serialization_version: 3
 go_feature_serving: true
 feature_server:
     type: local

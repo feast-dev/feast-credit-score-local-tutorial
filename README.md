@@ -13,9 +13,9 @@ form in [demo_walkthrough.ipynb](demo_walkthrough.ipynb).
 
 ## Requirements
 
-* Python 3.11
-* Registry: Postgresql  
-* Offline Storage: duckdb  
+* Python 3.12.11
+* Registry: file
+* Offline Storage: dask  
 * Online Storage: Redis
 
 ## Setup
@@ -26,8 +26,8 @@ You can setup the storages with Podman or Docker:
 
 1. Setup an online store with Redis by [Podman](https://podman.io/):  
 ```
-podman pull docker://bitnami/redis:latest
-podman run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes"  docker.io/bitnami/redis:latest  
+podman pull redis:7.4.5
+podman run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes"  docker.io/library/redis:7.4.5
 ```
 
 ### Setting up Feast
@@ -91,8 +91,8 @@ Steps:
 1. terminate the previous running `app.py` if it is still running.  
 2. start the Feast feature transformation server:
     `python app_with_transformation_server.py`  
-3. start the Go feature server, assume you have built the Go binary and named it as 'feast':  
-    `./feast -chdir ./feature_repo`
+3. start the Go feature server, assume you have built the Go binary and named it as 'feast_go':  
+    `./feast_go -chdir ./feature_repo -port 8080`
 4. test the URI "http://localhost:8080/health". We suppose to see 'Healthy' word be displayed.   
 5. test the following post for testing get-online-features. Make sure the `feast materialize` command have executed.
 ```
