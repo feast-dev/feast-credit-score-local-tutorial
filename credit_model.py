@@ -74,7 +74,7 @@ class CreditScoringModel:
         train_X = training_df[
             training_df.columns.drop(self.target)
             .drop("event_timestamp")
-            .drop("created_timestamp")
+            .drop("created_timestamp__")
             .drop("loan_id")
             .drop("zipcode")
             .drop("dob_ssn")

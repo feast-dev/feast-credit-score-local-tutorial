@@ -35,7 +35,7 @@ podman run -d -p 6379:6379 --name redis -e "ALLOW_EMPTY_PASSWORD=yes"  docker.io
 Install Feast using uv
 
 ```
-uv sync  
+uv sync --all-extras
 ```
 
 We have already set up a feature repository in [feature_repo/](feature_repo/). As a result, all we have to do is configure the [feature_store.yaml/](feature_repo/feature_store.yaml) in the feature repository. Please set the connection string of the Postgresql and Redis according to your local infra setup.  
@@ -249,3 +249,16 @@ Example returned feature values:
     ]
 }
 ```
+
+
+## Interactive demo (using Streamlit)
+
+Once the credit scoring model has been trained it can be used for interactive loan applications using Streamlit:
+
+Simply start the Streamlit application
+```
+uv run streamlit run streamlit_app.py
+```
+Then navigate to the URL on which Streamlit is being served. You should see a user interface through which loan applications can be made:
+
+![Streamlit Loan Application](streamlit.png)
